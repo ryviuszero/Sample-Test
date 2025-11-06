@@ -1,0 +1,69 @@
+#pragma kernel Main
+
+#include "NoiseLibrary.hlsl"
+
+struct Pixel {
+    int3 coord;
+
+    float lerp;
+
+    float3 cornerVector0;
+    float3 cornerVector1;
+    float3 cornerVector2;
+    float3 cornerVector3;
+    float3 cornerVector4;
+    float3 cornerVector5;
+    float3 cornerVector6;
+    float3 cornerVector7;
+
+    float3 constantVector0;
+    float3 constantVector1;
+    float3 constantVector2;
+    float3 constantVector3;
+    float3 constantVector4;
+    float3 constantVector5;
+    float3 constantVector6;
+    float3 constantVector7;
+}
+
+RWStructuredBuffer<float4> _Colors;
+RWTexture2D<float4> _Texture2D;
+RWTexture3D<float4> _Texture3D;
+
+int _Resolution;
+float _Frequency;
+bool _Is3D;
+bool _isTileable;
+float _Evolution;
+int _FBMIteration;
+
+float PerlinNoiseLerp(float l, float r, float t) {
+    t = (t * t * t * (t * (t * 6 - 15) + 10));
+    return lerp(l, r, t);
+}
+
+float GetConstantVector(int blocNumber, int3 blockCoord, float randomSeed) {
+    if (_isTileable) {
+       if (blockCoord.x == blockNumber) {
+         blockCoord.x = 0;
+       }
+
+       if (blockCoord.y == blockNumber) {
+         blockCoord.y = 0;
+       }
+        
+       if (blockCoord.z == blockNumber) {
+            blockCoord.z = 0;
+        }
+
+        float vec = GetRandom3To3_Raw(blockCoord + _Evolution, length(blockCoord) * randomSeed);
+        vec = normalize(vec);
+        return vec;
+}
+
+
+
+
+
+
+
