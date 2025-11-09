@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class Noise
 {
-    public static float[,] GenerateNoiseMap(int mapWidth, int mapHeight, float scale)
+    public static float[,] GenerateNoiseMap(int mapWidth, int mapHeight, float scale, int seed = 0)
     {
         float[,] noiseMap = new float[mapWidth, mapHeight];
+        
 
         if (scale <= 0)
         {
@@ -18,17 +19,11 @@ public class Noise
                 float sampleX = x / scale;
                 float sampleY = y / scale;
 
-                float perlinValue = Mathf.PerlinNoise(sampleX, sampleY);
+                float perlinValue = Mathf.PerlinNoise(sampleX + seed, sampleY + seed);
                 noiseMap[x, y] = perlinValue;
             }
         }
 
         return noiseMap;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
