@@ -45,7 +45,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        MapDisplay display = GetComponent<MapDisplay>();
+        MapDisplay display = FindAnyObjectByType<MapDisplay>();
         if (drawMode == DrawMode.NoiseMap)
         {
             display.DrawTexture(TextureGenerator.TextureFromHeightMap(noiseMap));
