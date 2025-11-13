@@ -18,12 +18,12 @@ public class MapGeneratorEditor : Editor
 
         if (GUILayout.Button("Generate Map"))
         {
-            mapGenerator.GenerateMap();
+            mapGenerator.DrawMapInEditor();
         }
 
         if (GUI.changed && mapGenerator.autoUpdate)
         {
-            mapGenerator.GenerateMap();
+            mapGenerator.DrawMapInEditor();
         }
         
     }
